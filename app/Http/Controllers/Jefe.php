@@ -29,7 +29,7 @@ class Jefe extends Controller
             $jefe->save();
             return response()->json([
                 'estado'=>$request->nombre." exitosamente agregado"
-            ]);
+            ],201);
         }
     }
 
@@ -50,7 +50,7 @@ class Jefe extends Controller
             $jefe->save();
             return response()->json([
                 'estado'=>'Valor o valores modificados exitosamente'
-            ]);
+            ],201);
         }
     }
     

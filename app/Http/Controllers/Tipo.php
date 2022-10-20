@@ -27,7 +27,7 @@ class Tipo extends Controller
             $tipo->save();
             return response()->json([
                 'estado'=>$request->nombre." exitosamente agregado"
-            ]);
+            ],201);
         }
     }
 
@@ -46,7 +46,7 @@ class Tipo extends Controller
             $tipo->save();
             return response()->json([
                 'estado'=>'Valor o valores modificados exitosamente'
-            ]);
+            ],201);
         }
     }
 
