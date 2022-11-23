@@ -21,9 +21,9 @@ return new class extends Migration
             $table->unsignedBigInteger('juego');
             $table->unsignedBigInteger('jefe');
 
-            $table->foreign('tipo')->references('id')->on('tipos');
-            $table->foreign('juego')->references('id')->on('juegos');
-            $table->foreign('jefe')->references('id')->on('jefes');
+            $table->foreign('tipo')->references('id')->on('tipos')->onDelete('cascade')->onUpdate('cascade');
+            $table->foreign('juego')->references('id')->on('juegos')->onDelete('cascade')->onUpdate('cascade');
+            $table->foreign('jefe')->references('id')->on('jefes')->onDelete('cascade')->onUpdate('cascade');
         });
     }
 

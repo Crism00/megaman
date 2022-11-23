@@ -6,13 +6,14 @@ use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Validator;
 use App\Models\juegos;
+use Illuminate\Support\Facades\Http;
 
 class Juego extends Controller
 {
     public function insertarJuego(Request $request, Response $response){
 
         $validator = Validator::make($request->all(),[
-            'nombre'=>'required | string',
+            'nombre'=>'required | string | unique:juegos',
         ]);
         if($validator->fails()){
             return response()->json([
@@ -37,6 +38,17 @@ class Juego extends Controller
                 'valores modificables'=>'nombre'
             ],400);
         }else{
+
+
+            $validator = Validator::make($request->all(),[
+                'nombre'=>'string',
+            ]);
+            if($validator->fails()){
+                return response()->json([
+                    $validator->errors()
+                ],400);
+            }
+
             $juego = juegos::find($id);
             if($request->nombre != null)$juego->nombre=$request->nombre;
             $juego->save();

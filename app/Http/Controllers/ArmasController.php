@@ -44,15 +44,14 @@ class ArmasController extends Controller
             'estabilidad.required' => 'La estabilidad es requerida',
             'estabilidad.integer' => 'La estabilidad debe ser un número entero',
             'estabilidad.max' => 'La estabilidad debe tener como máximo 100'
-        ]
-       
-        );
+        ]);
+
         if ($validator->fails())
         return response()->json(["errores" => $validator->errors()], 400);
 
 
 
-            $response = Http::post('http://192.168.125.55:8000/api/v1/armas/agregar',[
+            $response = Http::post('http://192.168.123.194:8000/api/v1/armas/agregar',[
                 'nombre'=>$request->nombre,
                 'tipo'=>$request->tipo,
                 'fuerza'=>$request->fuerza,
@@ -70,14 +69,13 @@ class ArmasController extends Controller
                 $arma->estabilidad = $request->estabilidad;
                 $arma->save();
                 return response()->json([
-                    
-                ]);
+                    "estado"=>"Ola"
+                ],201);
             }else{
                 return response()->json([
                     "La base de datos remota, rechazo la solicitud"
-                ]);
+                ],500);
             }
-        
     }
 
     public function actualizarArma(Request $request){
@@ -160,6 +158,8 @@ class ArmasController extends Controller
 
     
     }
+
+    
 
     
 }

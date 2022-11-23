@@ -6,13 +6,14 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use App\Models\mapas;
 use Illuminate\Http\Response;
+use Illuminate\Support\Facades\Http;
 
 class Mapa extends Controller
 {
     public function insertarMapa(Request $request, Response $response){
 
         $validator = Validator::make($request->all(),[
-            'nombre'=>'required',
+            'nombre'=>'required | unique:mapas| string',
             'tipo'=>'required | integer',
             'juego'=>'required | integer',
             'jefe'=>'required | integer'
@@ -44,6 +45,18 @@ class Mapa extends Controller
                 'valores modificables'=>['nombre','tipo','juego']
             ],400);
         }else{
+
+            $validator = Validator::make($request->all(),[
+                'tipo'=>'integer',
+                'juego'=>'integer',
+                'jefe'=>'integer'
+            ]);
+            if(validator()->fails()){
+                return response()->json([
+                    $validator->errors()
+                ]);
+            }
+
             $mapa = mapas::find($id);
             if($request->nombre != null)$mapa->nombre=$request->nombre;
             if($request->tipo != null)$mapa->tipo=$request->tipo;

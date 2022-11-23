@@ -5,6 +5,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use App\Models\tipos;
 use Illuminate\Http\Response;
+use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Redis;
 
 class Tipo extends Controller
@@ -12,7 +13,7 @@ class Tipo extends Controller
     public function insertarTipo(Request $request, Response $response){
 
         $validator = Validator::make($request->all(),[
-            'nombre'=>'required'
+            'nombre'=>'required | unique:tipos'
         ],$messages=[
             'required'=>'el atributo es requerido'
         ]);
@@ -32,6 +33,13 @@ class Tipo extends Controller
     }
 
     public function modificarTipo(Request $request, Response $response, int $id){
+
+        if($request->all()==null){
+            return response()->json([
+                'error'=>'No insertaste valores a modificar',
+                'valores modificables'=>['nombre']
+            ],400);
+        }
 
         $validator = Validator::make($request->all(),[
             'nombre'=>'required'
@@ -59,4 +67,5 @@ class Tipo extends Controller
         $tipo = tipos::find($id);
         return $tipo;
     }
+
 }

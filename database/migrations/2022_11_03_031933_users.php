@@ -21,6 +21,12 @@ return new class extends Migration
             $table->string('password');
             $table->rememberToken();
             $table->timestamps();
+            $table->string('apellidos')->nullable();
+            $table->string('telefono');
+            $table->string('codigo')->nullable();
+            $table->string('activo');
+            $table->unsignedBigInteger('rol');
+            $table->foreign('rol')->references('id')->on('roles');
         });
     }
 

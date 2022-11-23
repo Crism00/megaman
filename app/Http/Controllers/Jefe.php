@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\jefes;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
+use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Validator;
 
 class Jefe extends Controller
@@ -12,7 +13,7 @@ class Jefe extends Controller
     public function insertarJefe(Request $request, Response $response){
 
         $validator = Validator::make($request->all(),[
-            'nombre'=>'required',
+            'nombre'=>'required | unique:jefes',
             'tipo'=>'required | integer',
             'juego'=>'required | integer'
         ]);
@@ -36,7 +37,7 @@ class Jefe extends Controller
     public function modificarJefe(Request $request, Response $response, int $id){
 
         $validator = Validator::make($request->all(),[
-            'nombre'=>'required'
+            'nombre'=>'required | unique'
         ]);
         if($validator->fails()){
             return response()->json([
@@ -69,4 +70,7 @@ class Jefe extends Controller
         ->where('jefes.id','=',$id)->get();
         return $jefe;
     }
+
 }
+
+
